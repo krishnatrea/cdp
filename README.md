@@ -1,4 +1,4 @@
 # cdp
 Customer Data Platform. 
 
-- Get idea form segements trillo
+- Migrate golang-migration
