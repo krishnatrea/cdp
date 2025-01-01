@@ -1,4 +1,7 @@
-BIN ?= cdp
+all: build run 
 
-PKG := github.com/krishnatrea/cdp
+run: 
+	docker run cdp 
 
+build: 
+	docker build -t cdp .
