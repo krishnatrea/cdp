@@ -12,8 +12,11 @@ const PORT = "8080"
 
 func main() {
 	database.ConnectDatabase()
-	r := gin.Default()
-	err := r.Run(fmt.Sprintf(":%s", PORT))
+	router := gin.Default()
+	router.GET("/", func(c *gin.Context) {
+		c.String(200, "CDP by krishnatrea")
+	})
+	err := router.Run(fmt.Sprintf(":%s", PORT))
 	if err != nil {
 		slog.Error("error while serving the server", "error", err)
 	}
