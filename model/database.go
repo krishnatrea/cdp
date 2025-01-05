@@ -1,19 +1,19 @@
-package database
+package model
 
 import (
-	"database/sql"
 	"fmt"
 	"log/slog"
 	"os"
 	"strconv"
 
 	"github.com/joho/godotenv"
-	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-var Db *sql.DB
+var DB *gorm.DB
 
-func ConnectDatabase() {
+func ConnectDatabase() error {
 	err := godotenv.Load()
 	if err != nil {
 		slog.Error("Error is occurred  on .env file please check")
@@ -25,11 +25,26 @@ func ConnectDatabase() {
 	pass := os.Getenv("POSTGRES_PASSWORD")
 	psqlSetup := fmt.Sprintf("host=%s port=%d user=%s dbname=%s password=%s sslmode=disable",
 		host, port, user, dbname, pass)
-	db, errSql := sql.Open("postgres", psqlSetup)
-	if errSql != nil {
-		slog.Error("There is an error while connecting to the database", "Error", errSql)
+	db, err := gorm.Open(postgres.Open(psqlSetup), &gorm.Config{})
+	if err != nil {
+		return err
 	} else {
-		Db = db
-		slog.Info("Successfully connected to database!")
+		DB = db
+		slog.Info("Successfully Connected to Database")
 	}
+	return nil
+}
+
+func RunMigrations() error {
+	slog.Info("Running Migrations for the models.")
+	return DB.AutoMigrate(
+		&CustomerData{},
+		&User{},
+		&UserRole{},
+		&Project{},
+		&Organization{},
+		&Role{},
+		&Permission{},
+		&RolePermission{},
+	)
 }

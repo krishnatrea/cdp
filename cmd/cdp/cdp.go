@@ -5,13 +5,18 @@ import (
 	"log/slog"
 
 	"github.com/gin-gonic/gin"
-	"github.com/krishnatrea/cdp/database"
+	"github.com/krishnatrea/cdp/model"
 )
 
 const PORT = "8080"
 
 func main() {
-	database.ConnectDatabase()
+	if err := model.ConnectDatabase(); err != nil {
+		slog.Error("Failed to migrate database:", "Error", err)
+	}
+	if err := model.RunMigrations(); err != nil {
+		slog.Error("Failed to migrate database:", "Error", err)
+	}
 	router := gin.Default()
 	router.GET("/", func(c *gin.Context) {
 		c.String(200, "CDP by krishnatrea")
