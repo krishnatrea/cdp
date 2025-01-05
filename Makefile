@@ -1,7 +1,7 @@
-all: build run 
+all: build  
 
-run: 
-	docker run cdp 
+down: 
+	docker-compose down
 
 build: 
-	docker build -t cdp .
+	docker-compose up --build  
