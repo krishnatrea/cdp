@@ -11,9 +11,8 @@ import (
 
 func SetUp(config *bootstrap.Config, timeout time.Duration, db *gorm.DB, gin *gin.Engine) {
 	publicRouter := gin.Group("")
-
 	// All Public APIs
-	NewLoginRouter(config, timeout, db, publicRouter)
+	NewSignupRouter(config, timeout, db, publicRouter)
 	NewLoginRouter(config, timeout, db, publicRouter)
 	// NewRefreshTokenRouter(env, timeout, db, publicRouter)
 
