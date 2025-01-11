@@ -10,5 +10,6 @@ type User struct {
 	Firstname string `gorm:"type:varchar(255);"`
 	Lastname  string `gorm:"type:varchar(255);"`
 	Password  string `grom:"type:varchar(255);"`
+	IsDeleted bool   `grom:"type:boolean;"`
 	Roles     []Role `gorm:"many2many:user_roles;constraint:OnDelete:CASCADE"`
 }
