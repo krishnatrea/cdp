@@ -31,14 +31,26 @@ func (urp userRepository) Create(c context.Context, user *model.User) error {
 	return nil
 }
 
-func (urp userRepository) Fetch(c context.Context) ([]model.User, error) {
-	var user []model.User
+func (urp userRepository) Fetch(c context.Context) ([]*model.User, error) {
+	var users []*model.User
+	err := urp.db.Model(&model.User{}).Find(&users).Error
+	if err != nil {
 
-	return user, nil
+		return nil, err
+	}
+	return users, nil
 }
 
-func (urp userRepository) FetchById(c context.Context, id string) (model.User, error) {
-	return model.User{}, nil
+func (urp userRepository) FetchById(c context.Context, id string) (*model.User, error) {
+	user := new(model.User)
+
+	err := urp.db.Model(&model.User{}).First(user, id).Error
+	if err != nil {
+
+		return nil, err
+	}
+
+	return user, nil
 }
 
 func (urp userRepository) FetchByEmail(c context.Context, email string) (model.User, error) {
