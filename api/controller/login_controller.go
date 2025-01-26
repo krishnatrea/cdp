@@ -6,6 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/krishnatrea/cdp/bootstrap"
 	"github.com/krishnatrea/cdp/domain"
+	"github.com/krishnatrea/cdp/internal/tokenutil"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type LoginController struct {
@@ -13,13 +15,49 @@ type LoginController struct {
 	Config bootstrap.Config
 }
 
-func (sc *LoginController) Login(c *gin.Context) {
+func (lc *LoginController) Login(c *gin.Context) {
 	// Login and provide
 	var request domain.LoginRequest
 
 	c.ShouldBind(&request)
+	// Fetch User by email
+	user, err := lc.Repo.FetchByEmail(c, request.Email)
 
-	// Lets login.
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "username or password is not correct.",
+		})
+		return
+	}
+	if bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(request.Password)) != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "username or password is not correct.",
+		})
+		return
+	}
 
-	c.JSON(http.StatusOK, gin.H{"status": "ok"})
+	accessToken, err := tokenutil.CreateAccessToken(*user, lc.Config.AccessTokenSecret, lc.Config.AccessTokenTimeOut)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	refreshToken, err := tokenutil.CreateRefreshToken(*user, lc.Config.RefreshTokenSecret, lc.Config.RefreshTokenTimeOut)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	// generate access token and refresh token
+
+	loginResponse := domain.LoginResponse{
+		AccessToken:  accessToken,
+		RefreshToken: refreshToken,
+	}
+
+	c.JSON(http.StatusOK, loginResponse)
 }
