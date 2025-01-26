@@ -7,14 +7,17 @@ import (
 )
 
 type Config struct {
-	AppEnv            string `mapstructure:"APP_ENV"`
-	PostgresUser      string `mapstructure:"POSTGRES_USER"`
-	PostgresPassword  string `mapstructure:"POSTGRES_PASSWORD"`
-	PostgresDB        string `mapstructure:"POSTGRES_DB"`
-	PostgresHost      string `mapstructure:"POSTGRES_HOST"`
-	ContextTimeout    int    `mapstructure:"CONTEXT_TIMEOUT"`
-	ServerAddress     string `mapstructure:"SERVER_ADDRESS"`
-	AccessTokenSecret string `mapstructure:"ACCESS_TOKEN_SECRET"`
+	AppEnv              string `mapstructure:"APP_ENV"`
+	PostgresUser        string `mapstructure:"POSTGRES_USER"`
+	PostgresPassword    string `mapstructure:"POSTGRES_PASSWORD"`
+	PostgresDB          string `mapstructure:"POSTGRES_DB"`
+	PostgresHost        string `mapstructure:"POSTGRES_HOST"`
+	ContextTimeout      int    `mapstructure:"CONTEXT_TIMEOUT"`
+	ServerAddress       string `mapstructure:"SERVER_ADDRESS"`
+	AccessTokenSecret   string `mapstructure:"ACCESS_TOKEN_SECRET"`
+	RefreshTokenSecret  string `mapstructure:"REFRESH_TOKEN_SECRET"`
+	RefreshTokenTimeOut int    `mapstructure:"REFRESH_TOKEN_TIMEOUT"`
+	AccessTokenTimeOut  int    `mapstructure:"ACCESS_TOKEN_TIMEOUT"`
 
 	DBHost     string `mapstructure:"DB_HOST"`
 	DBPort     int    `mapstructure:"DB_PORT"`

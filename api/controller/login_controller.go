@@ -9,7 +9,7 @@ import (
 )
 
 type LoginController struct {
-	Repo   *domain.UserRepository
+	Repo   domain.UserRepository
 	Config bootstrap.Config
 }
 
@@ -20,7 +20,6 @@ func (sc *LoginController) Login(c *gin.Context) {
 	c.ShouldBind(&request)
 
 	// Lets login.
-
 
 	c.JSON(http.StatusOK, gin.H{"status": "ok"})
 }

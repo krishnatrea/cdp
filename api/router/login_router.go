@@ -13,7 +13,7 @@ import (
 func NewLoginRouter(config *bootstrap.Config, timeout time.Duration, db *gorm.DB, group *gin.RouterGroup) {
 	ur := repository.NewUserRepository(db)
 	lc := controller.LoginController{
-		Repo:   &ur,
+		Repo:   ur,
 		Config: *config,
 	}
 	group.POST("/login", lc.Login)

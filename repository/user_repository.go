@@ -14,8 +14,16 @@ type userRepository struct {
 	db *gorm.DB
 }
 
-func NewUserRepository(db *gorm.DB) domain.UserRepository {
-	return userRepository{db: db}
+// UserExitByEmail implements domain.UserRepository.
+func (urp userRepository) UserExitByEmail(c context.Context, email string) error {
+
+	_, err := urp.FetchByEmail(c, email)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (urp userRepository) Create(c context.Context, user *model.User) error {
@@ -53,6 +61,22 @@ func (urp userRepository) FetchById(c context.Context, id string) (*model.User, 
 	return user, nil
 }
 
-func (urp userRepository) FetchByEmail(c context.Context, email string) (model.User, error) {
-	return model.User{}, nil
+func (urp userRepository) FetchByEmail(c context.Context, email string) (*model.User, error) {
+	var user *model.User
+
+	result := urp.db.Where("email = ?", email).First(&user)
+
+	if result.Error != nil {
+		if result.Error == gorm.ErrRecordNotFound {
+			return nil, fmt.Errorf("user does not exist")
+		} else {
+			return user, result.Error
+		}
+	}
+
+	return user, nil
+}
+
+func NewUserRepository(db *gorm.DB) domain.UserRepository {
+	return userRepository{db: db}
 }
