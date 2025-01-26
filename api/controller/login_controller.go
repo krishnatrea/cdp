@@ -19,7 +19,14 @@ func (lc *LoginController) Login(c *gin.Context) {
 	// Login and provide
 	var request domain.LoginRequest
 
-	c.ShouldBind(&request)
+	err := c.ShouldBindJSON(&request)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
 	// Fetch User by email
 	user, err := lc.Repo.FetchByEmail(c, request.Email)
 

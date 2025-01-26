@@ -1,10 +1,10 @@
 package domain
 
 type SignUpRequest struct {
-	Firstname string `form:"first_name" binding:"required"`
-	Lastname  string `form:"last_name" binding:"required"`
-	Email     string `form:"email" binding:"required,email"`
-	Password  string `form:"password" binding:"required"`
+	Firstname string `json:"first_name" binding:"required"`
+	Lastname  string `json:"last_name" binding:"required"`
+	Email     string `json:"email" binding:"required,email"`
+	Password  string `json:"password" binding:"required"`
 }
 
 type SignUpResponse struct {

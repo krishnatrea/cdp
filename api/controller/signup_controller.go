@@ -19,7 +19,7 @@ type SignupController struct {
 func (sc *SignupController) SignUp(c *gin.Context) {
 	var request domain.SignUpRequest
 
-	err := c.ShouldBind(&request)
+	err := c.ShouldBindJSON(&request)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -30,9 +30,9 @@ func (sc *SignupController) SignUp(c *gin.Context) {
 
 	err = sc.Repo.UserExitByEmail(c, request.Email)
 
-	if err != nil {
+	if err == nil {
 		c.JSON(http.StatusAlreadyReported, gin.H{
-			"message": err.Error(),
+			"message": "user already exist",
 		})
 		return
 	}
