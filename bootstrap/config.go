@@ -16,8 +16,8 @@ type Config struct {
 	ServerAddress       string `mapstructure:"SERVER_ADDRESS"`
 	AccessTokenSecret   string `mapstructure:"ACCESS_TOKEN_SECRET"`
 	RefreshTokenSecret  string `mapstructure:"REFRESH_TOKEN_SECRET"`
-	RefreshTokenTimeOut int    `mapstructure:"REFRESH_TOKEN_TIMEOUT"`
-	AccessTokenTimeOut  int    `mapstructure:"ACCESS_TOKEN_TIMEOUT"`
+	RefreshTokenTimeOut int    `mapstructure:"REFRESH_TOKEN_EXPIRY_HOUR"`
+	AccessTokenTimeOut  int    `mapstructure:"ACCESS_TOKEN_EXPIRY_HOUR"`
 
 	DBHost     string `mapstructure:"DB_HOST"`
 	DBPort     int    `mapstructure:"DB_PORT"`
