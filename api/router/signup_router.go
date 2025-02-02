@@ -14,7 +14,7 @@ func NewSignupRouter(config *bootstrap.Config, timeout time.Duration, db *gorm.D
 	ur := repository.NewUserRepository(db)
 	sc := controller.SignupController{
 		Repo:   ur,
-		Config: *config,
+		Config: config,
 	}
 	group.POST("/signup", sc.SignUp)
 }

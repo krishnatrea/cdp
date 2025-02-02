@@ -12,7 +12,7 @@ import (
 
 type LoginController struct {
 	Repo   domain.UserRepository
-	Config bootstrap.Config
+	Config *bootstrap.Config
 }
 
 func (lc *LoginController) Login(c *gin.Context) {

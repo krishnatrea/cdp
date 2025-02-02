@@ -10,11 +10,13 @@ import (
 	"gorm.io/gorm"
 )
 
-func NewLoginRouter(config *bootstrap.Config, timeout time.Duration, db *gorm.DB, group *gin.RouterGroup) {
+func NewRefreshTokenRouter(config *bootstrap.Config, timeout time.Duration, db *gorm.DB, group *gin.RouterGroup) {
 	ur := repository.NewUserRepository(db)
-	lc := controller.LoginController{
+
+	rc := &controller.RefreshController{
 		Repo:   ur,
 		Config: config,
 	}
-	group.POST("/login", lc.Login)
+
+	group.POST("/refresh", rc.RefreshToken)
 }

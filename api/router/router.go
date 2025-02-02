@@ -14,7 +14,7 @@ func SetUp(config *bootstrap.Config, timeout time.Duration, db *gorm.DB, gin *gi
 	// All Public APIs
 	NewSignupRouter(config, timeout, db, publicRouter)
 	NewLoginRouter(config, timeout, db, publicRouter)
-	// NewRefreshTokenRouter(env, timeout, db, publicRouter)
+	NewRefreshTokenRouter(config, timeout, db, publicRouter)
 
 	protectedRouter := gin.Group("")
 	// Middleware to verify AccessToken
