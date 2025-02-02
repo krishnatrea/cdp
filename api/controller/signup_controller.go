@@ -7,7 +7,7 @@ import (
 	"github.com/krishnatrea/cdp/bootstrap"
 	"github.com/krishnatrea/cdp/database/model"
 	"github.com/krishnatrea/cdp/domain"
-	"github.com/krishnatrea/cdp/internal/tokenutil"
+	"github.com/krishnatrea/cdp/pkg/tokenutil"
 	"golang.org/x/crypto/bcrypt"
 )
 

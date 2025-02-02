@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/krishnatrea/cdp/bootstrap"
 	"github.com/krishnatrea/cdp/domain"
-	"github.com/krishnatrea/cdp/internal/tokenutil"
+	"github.com/krishnatrea/cdp/pkg/tokenutil"
 	"golang.org/x/crypto/bcrypt"
 )
 
